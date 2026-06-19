@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#26262a" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="EasyTune" />
+  <meta name="application-name" content="EasyTune" />
+  <title>EasyTune</title>
+  <link rel="manifest" href="manifest.webmanifest" type="application/manifest+json">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="icons/favicon.ico">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+</head>
+<body>
+  <div id="splash" class="splash" aria-label="Ekran startowy">
+    <img src="assets/easytune-logo.png" alt="EasyTune — Guitar tools suite" class="splash-logo" />
+    <div id="splash-version" class="splash-version">v…</div>
+  </div>
+
+  <div id="app" class="app" hidden>
+    <header class="app-header" aria-label="Nagłówek aplikacji">
+      <button id="homeLogoBtn" class="logo-button" type="button" aria-label="Wróć do ekranu głównego"><img src="assets/easytune-logo.png" alt="EasyTune — Guitar tools suite" class="header-logo" /></button>
+      <button class="options-button" type="button" aria-label="Opcje i informacje o aplikacji" aria-expanded="false" aria-controls="options-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <main class="content" id="content" tabindex="-1">
+      <section class="start-panel home-screen" aria-label="Ekran startowy">
+        <div class="home-card-bg" aria-hidden="true"></div>
+
+        <button class="tool-card tool-card-transpose" type="button" data-view="transpose" aria-label="Transpozycja — Zmień tonację utworu">
+          <span class="tool-copy">
+            <span class="tool-title">Transpozycja</span>
+            <span class="tool-desc">Zmień tonację utworu</span>
+          </span>
+          <span class="fret-art fret-art-transpose" aria-hidden="true">
+            <span class="dot dot-a"></span>
+            <span class="dot dot-b"></span>
+          </span>
+          <span class="tool-arrow" aria-hidden="true">›</span>
+        </button>
+
+        <button class="tool-card tool-card-chords" type="button" data-view="chords" aria-label="Akordy — Diagramy chwytów gitarowych">
+          <span class="tool-copy">
+            <span class="tool-title">Akordy</span>
+            <span class="tool-desc">Diagramy chwytów gitarowych</span>
+          </span>
+          <span class="fret-art fret-art-chords" aria-hidden="true">
+            <span class="dot dot-a"></span>
+            <span class="dot dot-b"></span>
+            <span class="dot dot-c"></span>
+          </span>
+          <span class="tool-arrow" aria-hidden="true">›</span>
+        </button>
+
+        <button class="tool-card tool-card-metronome" type="button" data-view="metronome" aria-label="Metronom — Tempo, BPM i rytm">
+          <span class="tool-copy">
+            <span class="tool-title">Metronom</span>
+            <span class="tool-desc">Tempo, BPM i rytm</span>
+          </span>
+          <span class="fret-art fret-art-metronome" aria-hidden="true">
+            <span class="dot dot-green"></span>
+          </span>
+          <span class="tool-arrow" aria-hidden="true">›</span>
+        </button>
+      </section>
+    </main>
+
+    <div id="options-menu" class="options-menu" hidden>
+      <button type="button" data-pwa-install>Zainstaluj aplikację</button>
+      <button type="button" data-app-modal="options">Opcje</button>
+      <button type="button" data-app-modal="about">Informacje o aplikacji</button>
+    </div>
+  </div>
+
+  <div id="chord-modal" class="chord-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Powiększony diagram akordu">
+    <div class="chord-modal-card">
+      <button class="modal-close" type="button" data-close-chord aria-label="Zamknij">×</button>
+      <div id="chord-modal-content"></div>
+    </div>
+  </div>
+
+  <div id="app-modal" class="app-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Opcje aplikacji">
+    <div class="app-modal-card">
+      <button class="app-modal-close" type="button" data-close-app-modal aria-label="Zamknij">×</button>
+      <div id="app-modal-content"></div>
+    </div>
+  </div>
+
+  <div id="metro-visual-modal" class="metro-visual-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Powiększony metronom">
+    <div class="metro-visual-card">
+      <button class="metro-visual-close" type="button" data-close-metro-visual aria-label="Zamknij">×</button>
+      <h2>Metronom</h2>
+      <div id="metroModalBeats" class="metro-big-beats"></div>
+<div id="metroVisual" class="metro-visual">
+        <div class="metro-arc"></div>
+        <div class="metro-pendulum"><span></span></div>
+        <div class="metro-weight"></div>
+        <div class="metro-visual-center">
+          <strong id="metroModalBpm">100</strong>
+          <span>BPM</span>
+          <em id="metroModalMeter">4/4</em>
+        </div>
+      </div>
+      <div class="metro-modal-stepper" aria-label="Regulacja BPM">
+        <button id="metroModalDown" class="round-btn" type="button" aria-label="Zmniejsz BPM">−</button>
+        <div class="metro-modal-bpm-label">tempo</div>
+        <button id="metroModalUp" class="round-btn" type="button" aria-label="Zwiększ BPM">+</button>
+      </div>
+      <button id="metroModalTap" class="tap-btn" type="button">TAP TEMPO</button>
+      
+      <div class="metro-modal-controls">
+        <button id="metroModalStart" class="primary-btn" type="button">Start</button>
+        <button id="metroModalReset" class="ghost-btn" type="button">Reset</button>
+        <button id="metroModalFullscreen" class="ghost-btn" type="button">Pełny ekran</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    /* EasyTune offline registration */
+    (function(){
+      if (!('serviceWorker' in navigator)) return;
+      window.addEventListener('load', function(){
+        navigator.serviceWorker.register('./sw.js', { scope: './' }).then(function(reg){
+          if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+          return navigator.serviceWorker.ready;
+        }).catch(function(){});
+      });
+    })();
+  </script>
+  <script src="app.js" defer></script>
+
+</body>
+</html>
