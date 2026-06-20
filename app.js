@@ -639,6 +639,8 @@ let cleanTapTimes = [];
 let cleanMetroTimer = null;
 let metroPendulumFrame = null;
 let metroPendulumStartedAt = 0;
+let metroWasRunningBeforeModal = false;
+let metroPausedByModal = false;
 
 function metronomeHtml(){
   const meterLabel = meter === 6 ? '6/8' : `${meter}/4`;
@@ -718,6 +720,8 @@ function metronomeHtml(){
 }
 
 function initMetronome(){
+  metroWasRunningBeforeModal = false;
+  metroPausedByModal = false;
   renderMetroControls();
   syncCleanMetronomeUi();
   setBpm(bpm, {restart:false});
@@ -733,6 +737,7 @@ function initMetronome(){
   document.querySelector('#openAccentModal')?.addEventListener('click', () => openMetroSettings('metroAccentModal'));
   document.querySelector('#metroTapInfoClean')?.addEventListener('click', () => {
     const modal = document.querySelector('#tapHelpModal');
+    pauseMetronomeForModal();
     modal?.classList.add('open');
     modal?.setAttribute('aria-hidden','false');
   });
@@ -747,7 +752,27 @@ function initMetronome(){
   }));
 }
 
+function pauseMetronomeForModal(){
+  if(metroPausedByModal) return;
+  metroWasRunningBeforeModal = metroRunning;
+  if(metroRunning) stopMetronome();
+  metroPausedByModal = metroWasRunningBeforeModal;
+}
+function isAnyMetroModalOpen(){
+  const settingsOpen = Array.from(document.querySelectorAll('.metro-settings-modal')).some(m => m.classList.contains('visible'));
+  const tapHelpOpen = document.querySelector('#tapHelpModal')?.classList.contains('open');
+  return settingsOpen || Boolean(tapHelpOpen);
+}
+function resumeMetronomeAfterModal(){
+  if(isAnyMetroModalOpen()) return;
+  const shouldResume = metroPausedByModal && metroWasRunningBeforeModal;
+  metroPausedByModal = false;
+  metroWasRunningBeforeModal = false;
+  if(shouldResume && !metroRunning) startMetronome();
+}
+
 function openMetroSettings(id){
+  pauseMetronomeForModal();
   document.querySelectorAll('.metro-settings-modal').forEach(m => {
     m.classList.remove('visible');
     m.setAttribute('aria-hidden','true');
@@ -762,6 +787,7 @@ function closeMetroSettings(){
     m.classList.remove('visible');
     m.setAttribute('aria-hidden','true');
   });
+  resumeMetronomeAfterModal();
 }
 
 function closeTapHelpModal(){
@@ -769,6 +795,7 @@ function closeTapHelpModal(){
   if(!modal) return;
   modal.classList.remove('open');
   modal.setAttribute('aria-hidden','true');
+  resumeMetronomeAfterModal();
 }
 
 function renderMetroControls(){
