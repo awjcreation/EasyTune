@@ -564,14 +564,14 @@ function openAppModal(kind){
     ? `<h2>Opcje</h2><p>EasyTune działa offline po pierwszym uruchomieniu.${isPwaInstalled() ? ' Aplikacja jest już uruchomiona jako zainstalowane PWA.' : ' Aby działała jako pełne PWA, wybierz „Zainstaluj aplikację”, a nie „Dodaj skrót”.'}</p>${installMarkup}`
     : kind === 'transpose-result'
       ? '<h2>Wynik transpozycji</h2><p>Kliknij dowolny akord w oknie wyniku, aby otworzyć powiększony diagram tego chwytu.</p>'
-      : '<h2>EasyTune</h2><p>Transpozycja, akordy i metronom. Wersja PWA offline 2.4.0.</p>';
+      : '<h2>EasyTune</h2><p>Transpozycja, akordy i metronom. Wersja PWA offline 1.2.</p>';
   appModal.classList.add('visible'); appModal.setAttribute('aria-hidden','false');
   syncInstallButtons();
 }
 function closeAppModal(){ if(!appModal) return; appModal.classList.remove('visible'); appModal.setAttribute('aria-hidden','true'); }
 
 async function loadManifestVersion(){
-  try{ const res = await fetch('manifest.webmanifest', {cache:'no-store'}); const m = await res.json(); versionEl.textContent = `v${m.version || '1.0'}`; } catch { versionEl.textContent = 'v1.0'; }
+  try{ const res = await fetch('manifest.webmanifest', {cache:'no-store'}); const m = await res.json(); versionEl.textContent = `v${m.version || '1.2'}`; } catch { versionEl.textContent = 'v1.2'; }
 }
 function showApp(){ app.hidden = false; renderView('home'); setTimeout(()=>splash.classList.add('is-hidden'), 850); setTimeout(()=>splash.remove(), 1300); }
 
