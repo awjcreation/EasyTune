@@ -572,7 +572,7 @@ function openAppModal(kind){
 function closeAppModal(){ if(!appModal) return; appModal.classList.remove('visible'); appModal.setAttribute('aria-hidden','true'); }
 
 async function loadManifestVersion(){
-  try{ const res = await fetch('manifest.webmanifest', {cache:'no-store'}); const m = await res.json(); appVersion = m.version || '1.2'; versionEl.textContent = `v${appVersion}`; } catch { versionEl.textContent = `v${appVersion}`; }
+  try{ const res = await fetch('manifest.webmanifest'); const m = await res.json(); appVersion = m.version || '1.2'; versionEl.textContent = `v${appVersion}`; } catch { versionEl.textContent = `v${appVersion}`; }
 }
 function showApp(){ app.hidden = false; renderView('home'); setTimeout(()=>splash.classList.add('is-hidden'), 850); setTimeout(()=>splash.remove(), 1300); }
 
