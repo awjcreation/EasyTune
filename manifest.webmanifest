@@ -2,7 +2,7 @@
   "name": "EasyTune",
   "short_name": "EasyTune",
   "description": "Transpozycja, akordy i metronom dla gitarzystów.",
-  "version": "1.32",
+  "version": "1.33",
   "id": "./",
   "start_url": "./",
   "scope": "./",
