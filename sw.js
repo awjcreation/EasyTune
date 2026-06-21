@@ -1,5 +1,5 @@
-const APP_VERSION = '1.0';
-const CACHE_NAME = 'easytune-offline-1.0';
+const APP_VERSION = '1.2';
+const CACHE_NAME = 'easytune-offline-1.2';
 
 const APP_SHELL = [
   './',
