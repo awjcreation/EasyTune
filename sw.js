@@ -7,7 +7,6 @@ const APP_SHELL = [
   './styles.css',
   './app.js',
   './manifest.webmanifest',
-  './manifest.json',
   './sw.js',
   './assets/easytune-logo.png',
   './icons/favicon.ico',
