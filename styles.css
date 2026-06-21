@@ -881,14 +881,14 @@ button { font: inherit; }
 }
 
 /* =====================================================
-   EasyTune v56 — RESPONSYWNY METRONOM
+   EasyTune v1.3 — RESPONSYWNY METRONOM
    ===================================================== */
 
 .metro-clean-screen{
   --metro-scale: 1;
   --metro-visual-width: 360px;
   --metro-visual-ratio: 1.16;
-  padding: clamp(12px, 2vh, 20px) clamp(12px, 1.5vw, 18px) clamp(14px, 2vh, 24px) !important;
+  padding: clamp(12px, 2vh, 20px) clamp(12px, 1.5vw, 18px) clamp(10px, 1.5vh, 16px) !important;
 }
 
 .metro-clean-main{
@@ -1068,7 +1068,7 @@ button { font: inherit; }
 
 .metro-clean-actions{
   width: min(100%, 520px) !important;
-  margin: clamp(10px, 1.8vh, 20px) auto 0 !important;
+  margin: 0 auto 0 !important;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
@@ -1086,6 +1086,3 @@ button { font: inherit; }
 .metro-clean-screen.metro-clean-landscape .metro-clean-meta button{
   min-height: clamp(48px, calc(56px * var(--metro-scale)), 58px) !important;
 }
-
-window.addEventListener('resize', scheduleCleanMetronomeLayoutSync);
-window.visualViewport?.addEventListener?.('resize', scheduleCleanMetronomeLayoutSync);
