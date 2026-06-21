@@ -4690,14 +4690,3 @@ label[for="chordSearch"]{
 .metro-clean-visual.accent-hit::before{
   animation:metroAccentFlash .14s ease-out 1 !important;
 }
-
-/* EasyTune v55 — fix beats container full width + BPM button cursor */
-/* .metro-clean-beats has no explicit width; parent grid's justify-items:center
-   (set in v39) causes it to shrink-wrap to ~132px. Force full width. */
-.metro-clean-beats {
-  width: 100% !important;
-}
-/* BPM display button now opens Tempo modal — restore pointer cursor */
-#metroCleanBpmButton {
-  cursor: pointer !important;
-}
