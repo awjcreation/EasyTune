@@ -4701,3 +4701,108 @@ label[for="chordSearch"]{
 #metroCleanBpmButton {
   cursor: pointer !important;
 }
+
+/* EasyTune v56 — responsive metronome scales to the app viewport */
+.metro-clean-screen{
+  --metro-scale:1;
+  --metro-visual-width:360px;
+  --metro-visual-ratio:1.16;
+}
+.metro-clean-main{
+  width:min(100%, 760px) !important;
+  margin:0 auto !important;
+  gap:clamp(10px, 1.8vh, 18px) !important;
+  justify-items:stretch !important;
+}
+.metro-clean-visual{
+  width:min(100%, var(--metro-visual-width)) !important;
+  height:calc(var(--metro-visual-width) * var(--metro-visual-ratio)) !important;
+  min-height:0 !important;
+  margin:0 auto !important;
+  border-radius:clamp(18px, calc(24px * var(--metro-scale)), 28px) !important;
+}
+.metro-clean-visual::before{
+  width:calc(300px * var(--metro-scale)) !important;
+  height:calc(300px * var(--metro-scale)) !important;
+}
+.metro-clean-scale{
+  top:calc(56px * var(--metro-scale)) !important;
+  width:calc(190px * var(--metro-scale)) !important;
+  height:calc(78px * var(--metro-scale)) !important;
+  border-radius:calc(190px * var(--metro-scale)) calc(190px * var(--metro-scale)) 0 0 !important;
+}
+.metro-clean-scale::before,
+.metro-clean-scale::after{
+  top:calc(44px * var(--metro-scale)) !important;
+  width:calc(36px * var(--metro-scale)) !important;
+}
+.metro-clean-scale::before{
+  left:calc(18px * var(--metro-scale)) !important;
+}
+.metro-clean-scale::after{
+  right:calc(18px * var(--metro-scale)) !important;
+}
+.metro-clean-pendulum{
+  top:calc(74px * var(--metro-scale)) !important;
+  width:max(3px, calc(4px * var(--metro-scale))) !important;
+  height:calc(230px * var(--metro-scale)) !important;
+}
+.metro-clean-pendulum span{
+  bottom:calc(-17px * var(--metro-scale)) !important;
+  width:calc(34px * var(--metro-scale)) !important;
+  height:calc(34px * var(--metro-scale)) !important;
+}
+.metro-clean-bpm{
+  min-width:0 !important;
+  padding:calc(10px * var(--metro-scale)) calc(16px * var(--metro-scale)) !important;
+}
+.metro-clean-bpm strong{
+  font-size:clamp(52px, calc(112px * var(--metro-scale)), 112px) !important;
+}
+.metro-clean-bpm span{
+  margin-top:clamp(6px, calc(10px * var(--metro-scale)), 12px) !important;
+  font-size:clamp(13px, calc(16px * var(--metro-scale)), 16px) !important;
+}
+.metro-clean-beats{
+  min-height:clamp(48px, calc(62px * var(--metro-scale)), 68px) !important;
+  padding:clamp(10px, calc(16px * var(--metro-scale)), 16px) clamp(8px, calc(12px * var(--metro-scale)), 12px) !important;
+  gap:clamp(8px, calc(12px * var(--metro-scale)), 14px) !important;
+}
+.beat-wrap{
+  gap:clamp(4px, calc(6px * var(--metro-scale)), 6px) !important;
+}
+.beat-number{
+  font-size:clamp(10px, calc(12px * var(--metro-scale)), 12px) !important;
+}
+.metro-clean-beats .beat{
+  width:clamp(14px, calc(18px * var(--metro-scale)), 18px) !important;
+  height:clamp(14px, calc(18px * var(--metro-scale)), 18px) !important;
+}
+.metro-clean-meta{
+  width:100% !important;
+  gap:clamp(8px, calc(10px * var(--metro-scale)), 12px) !important;
+}
+.metro-clean-meta button{
+  min-height:clamp(50px, calc(62px * var(--metro-scale)), 64px) !important;
+  padding:clamp(8px, calc(10px * var(--metro-scale)), 10px) clamp(4px, calc(8px * var(--metro-scale)), 8px) !important;
+}
+.metro-clean-meta span{
+  font-size:clamp(11px, calc(12px * var(--metro-scale)), 12px) !important;
+}
+.metro-clean-meta strong{
+  font-size:clamp(15px, calc(18px * var(--metro-scale)), 18px) !important;
+}
+.metro-clean-actions{
+  width:min(100%, 520px) !important;
+  margin:clamp(10px, 1.8vh, 20px) auto 0 !important;
+}
+.metro-clean-actions .primary-btn{
+  min-height:clamp(50px, calc(56px * var(--metro-scale)), 58px) !important;
+  font-size:clamp(17px, calc(18px * var(--metro-scale)), 18px) !important;
+}
+.metro-clean-screen.metro-clean-landscape .metro-clean-main{
+  gap:clamp(8px, 1.3vh, 14px) !important;
+}
+.metro-clean-screen.metro-clean-landscape .metro-clean-meta button{
+  min-height:clamp(48px, calc(56px * var(--metro-scale)), 58px) !important;
+}

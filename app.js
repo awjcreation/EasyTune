@@ -642,6 +642,7 @@ let metroPendulumFrame = null;
 let metroPendulumStartedAt = 0;
 let metroWasRunningBeforeModal = false;
 let metroPausedByModal = false;
+let metroLayoutFrame = null;
 
 function metronomeHtml(){
   const meterLabel = meter === 6 ? '6/8' : `${meter}/4`;
@@ -726,6 +727,7 @@ function initMetronome(){
   renderMetroControls();
   syncCleanMetronomeUi();
   setBpm(bpm, {restart:false});
+  scheduleCleanMetronomeLayoutSync();
 
   document.querySelector('#startMetro')?.addEventListener('click', () => metroRunning ? stopMetronome() : startMetronome());
   document.querySelector('#metroResetTop')?.addEventListener('click', resetMetronomeSettings);
@@ -752,6 +754,83 @@ function initMetronome(){
     if(e.target === modal) closeMetroSettings();
   }));
 }
+
+function scheduleCleanMetronomeLayoutSync(){
+  if(currentView !== 'metronome') return;
+  if(metroLayoutFrame) cancelAnimationFrame(metroLayoutFrame);
+  metroLayoutFrame = requestAnimationFrame(() => {
+    metroLayoutFrame = null;
+    syncCleanMetronomeLayout();
+  });
+}
+
+function syncCleanMetronomeLayout(){
+  const screen = document.querySelector('.metro-clean-screen');
+  const main = document.querySelector('#metroCleanMain');
+  const visual = document.querySelector('#metroCleanVisual');
+  if(!screen || !main || !visual) return;
+
+  const viewportWidth = Math.max(320, Math.round(
+    window.visualViewport?.width ||
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    screen.clientWidth ||
+    0
+  ));
+  const viewportHeight = Math.max(320, Math.round(
+    window.visualViewport?.height ||
+    window.innerHeight ||
+    document.documentElement.clientHeight ||
+    screen.clientHeight ||
+    0
+  ));
+  const landscape = viewportWidth > viewportHeight;
+  const head = screen.querySelector('.view-head');
+  const actions = screen.querySelector('.metro-clean-actions');
+  const screenStyle = getComputedStyle(screen);
+  const mainStyle = getComputedStyle(main);
+  const actionsStyle = actions ? getComputedStyle(actions) : null;
+  const screenHeight = screen.clientHeight || Math.round(screen.getBoundingClientRect().height) || viewportHeight;
+  const availableWidth = Math.max(
+    260,
+    Math.min(main.clientWidth || screen.clientWidth || viewportWidth, viewportWidth - 28)
+  );
+  const availableHeight = Math.max(
+    230,
+    screenHeight -
+      (head?.offsetHeight || 0) -
+      ((parseFloat(screenStyle.paddingTop) || 0) + (parseFloat(screenStyle.paddingBottom) || 0)) -
+      (actions?.offsetHeight || 0) -
+      (actionsStyle ? (parseFloat(actionsStyle.marginTop) || 0) : 0) -
+      16
+  );
+
+  const baseVisualWidth = landscape ? 384 : 360;
+  const baseVisualRatio = landscape ? 0.98 : 1.16;
+  const baseVisualHeight = baseVisualWidth * baseVisualRatio;
+  const baseMainHeight =
+    baseVisualHeight +
+    (landscape ? 56 : 62) +
+    (landscape ? 58 : 62) +
+    ((parseFloat(mainStyle.rowGap || mainStyle.gap) || 18) * 2);
+  const scale = Math.max(
+    0.56,
+    Math.min(
+      availableWidth / baseVisualWidth,
+      availableHeight / baseMainHeight,
+      1.18
+    )
+  );
+
+  screen.classList.toggle('metro-clean-landscape', landscape);
+  screen.classList.toggle('metro-clean-portrait', !landscape);
+  screen.style.setProperty('--metro-scale', scale.toFixed(3));
+  screen.style.setProperty('--metro-visual-width', `${Math.round(baseVisualWidth * scale)}px`);
+  screen.style.setProperty('--metro-visual-ratio', baseVisualRatio.toFixed(3));
+}
+
+window.addEventListener('resize', scheduleCleanMetronomeLayoutSync);
+window.visualViewport?.addEventListener?.('resize', scheduleCleanMetronomeLayoutSync);
 
 function pauseMetronomeForModal(){
   if(metroPausedByModal) return;
@@ -918,6 +997,7 @@ function syncCleanMetronomeUi(){
     visual.style.setProperty('--metro-duration', `${60000 / bpm}ms`);
     visual.classList.toggle('running', metroRunning);
   }
+  scheduleCleanMetronomeLayoutSync();
 }
 
 function setBpm(v, opts={restart:true}){
