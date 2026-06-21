@@ -2145,3 +2145,14 @@ function stopPendulumMotion(reset=true){
     if(!metroRunning) requestAnimationFrame(setNeedleLeft);
   };
 })();
+
+/* EasyTune v55 — BPM display button opens Tempo modal */
+(function(){
+  var prevInit = initMetronome;
+  initMetronome = function(){
+    prevInit();
+    document.querySelector('#metroCleanBpmButton')?.addEventListener('click', function(){
+      openMetroSettings('metroTempoModal');
+    });
+  };
+})();
