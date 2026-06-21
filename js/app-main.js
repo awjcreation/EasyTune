@@ -57,7 +57,7 @@ async function loadManifestVersion() {
   if (!versionEl) return;
 
   try {
-    const res = await fetch('manifest.webmanifest', { cache: 'no-store' });
+    const res = await fetch('manifest.webmanifest');
     const manifest = await res.json();
     versionEl.textContent = `v${manifest.version || CONFIG.APP_VERSION}`;
   } catch {

@@ -1,5 +1,5 @@
-const APP_VERSION = '1.0';
-const CACHE_NAME = 'easytune-offline-1.0';
+const APP_VERSION = '1.2';
+const CACHE_NAME = 'easytune-offline-1.2';
 
 const APP_SHELL = [
   './',
@@ -7,7 +7,6 @@ const APP_SHELL = [
   './styles.css',
   './app.js',
   './manifest.webmanifest',
-  './manifest.json',
   './sw.js',
   './assets/easytune-logo.png',
   './icons/favicon.ico',
